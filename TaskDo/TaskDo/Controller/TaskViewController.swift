@@ -23,6 +23,7 @@ class TaskViewController: UIViewController, UITableViewDataSource {
     }
     
     func prepareForViewModal() {
+        self.taskViewModal.fetcModal()
         self.taskViewModal.shouldUpdate = {
             [unowned self] (finished, error) in
             if !error {
@@ -70,5 +71,14 @@ class TaskViewController: UIViewController, UITableViewDataSource {
         cell.showData(data: task)
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+      if editingStyle == .delete {
+        let task = taskViewModal.taskList[indexPath.row]
+        self.taskViewModal.deleteModal(task: task, indexPath: indexPath)
+//        self.tableView.deleteRows(at: [indexPath], with: .automatic)
+      }
+    }
+
 
 }
